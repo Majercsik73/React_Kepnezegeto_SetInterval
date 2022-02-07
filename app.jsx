@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 
 let kepek=["sovereign.png", "magyarszentek.png",
 		   "magyarszabadsag.png","aranymeteorit.jpg",
@@ -11,11 +10,24 @@ ReactDOM.render(
     document.getElementById("app-container")
 );
 
-function App(){
+function App() {
     const [kep, setKep] = React.useState(aktualis);
-    
-    return <div style={{textAlign: "center"}}>
-        <img src={kepek[kep]} style={{width: "600px", height: "300px"}}></img> 
 
-    </div>
-}
+    React.useEffect(() => {
+        const lapozo = setInterval(() => {
+          if (aktualis<5){
+              aktualis++
+            }
+          else {
+              aktualis=0
+            }
+          setKep(aktualis);
+        }, 2000);
+                   // clearing interval
+        return () => clearInterval(lapozo);
+      });
+  
+    return  <div>
+                <img src={kepek[kep]} style={{width: "600px", height: "300px"}}></img>
+            </div>
+  }
